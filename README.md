@@ -15,7 +15,6 @@ S1QueryConverter is a project written in Python 3 which takes SentinelOne DeepVi
 - [Overview](#overview)
 - [Description](#description)
 - [Install & Usage](#install--usage)
-- [Help](#help)
 - [Reporting Issues](#reporting-issues)
 - [Disclaimer](#disclaimer)
 

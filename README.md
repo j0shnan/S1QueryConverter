@@ -67,8 +67,8 @@ python3 S1QueryConverter_Multiple.py
 
 ```
 
-# Reporting an Issue
-If you encounter an issue with bad conversions, please let me know. Opan an issue and reference the issue / error code so that we can account for it correctly. 
+# Reporting Issues
+If you encounter an issue with bad conversions, please let me know. Open an issue and reference the error your see (or better yet, in the code) so that we can account for it correctly. 
 
 # Disclaimer
 This tool was made with intent to help the Cyber community at large.  The author accepts no responsiblity for queries that do not function after using the tool to convert them.  Please double check your detections with validation.  

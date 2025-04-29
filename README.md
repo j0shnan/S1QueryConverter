@@ -1,5 +1,5 @@
 # S1 Query Converter
-content = """# Overview
+
 
 S1QueryConverter is a project written in Python 3 which takes SentinelOne DeepVis v1 queries and translates them into DeepVis v2 query language.  
 

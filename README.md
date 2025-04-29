@@ -1,4 +1,4 @@
-[![Sponsored By CyberMaxx](https://github.com/j0shnan/S1QueryConverter/Images/cybermaxx_logo.png)](https://www.cybermaxx.com/)
+[![Alt text for image](https://github.com/j0shnan/S1QueryConverter/Images/cybermaxx_logo.png)][Sponsored By CyberMaxx](https://www.cybermaxx.com/)
 
 
 
@@ -23,9 +23,9 @@ S1QueryConverter is a project written in Python 3 which takes SentinelOne DeepVi
 
 S1QueryConverter is a python script which takes a file containing SentinelOne DeepVis v1 queries and translates them into DeepVis v2 query language using argparse for file intake and re for regular expressions.
 
-When run, the script writes output to the terminal.
+When ran, the script writes output to the terminal.
 
-To run the scripts you'll need Python 3.  You can DL the raw files from this GitHub page, the zip, or clone the repo.  It should work with files anywhere on your system the user had permission to alter. Notably, the Multi converter will convert an entire detection library.  The script needs to be altered with the following hardcoded parameters to function:
+To run the scripts you'll need Python 3.  You can DL the raw files from this GitHub page, the zip, or clone the repo.  It should work with files anywhere on your system the user has permission to alter. Notably, the Multi converter will convert an entire detection library.  The script needs to be altered with the following hardcoded parameters to function:
 - input .xlsx file
 - sheet name from the file
 - column(s) to convert (that's right, we'll do multiple columns!!)
@@ -39,7 +39,7 @@ Lastly, there is one known issue which tends to create a chicken / egg scenario.
 E.g., " 'httpx://SomeSite.Site" or "\\Maybe\Some\Share BlahBlah=\"AnotherResource" 
 In both examples this creates an issue in the new QL.  The resolution here is to encapsulate both with Single Quotes:
 E.g., 'httpx://SomeSite.Site' or '\\Maybe\Some\Share BlahBlah=\"AnotherResource'
-Since v2 excepts single quotes this is not a major issue, but still needs to be solved manually.  Thankfully, these aren't scenarios we run into frequently when making queries.  Please be aware that the scripts will both hit these conditions and stop converting anything that comes after it to v2 ql (you'll have a partially converted query).  
+Since v2 accepts single quotes this is not a major issue, but still needs to be solved manually.  Thankfully, these aren't scenarios we run into frequently when making queries.  Please be aware that the scripts will both hit these conditions and stop converting anything that comes after it to v2 ql (you'll have a partially converted query).  
 
 
 
@@ -47,7 +47,7 @@ Since v2 excepts single quotes this is not a major issue, but still needs to be 
 
 ## Install
 
-To install you can clone the repo, DL the raw .py files (not dependant on one another), or paste them where you would like to perform operations on your file system.
+To install you can clone the repo, DL the raw .py files (not dependent on one another), or paste them where you would like to perform operations on your file system.
 E.g.,
 
 ```
@@ -76,4 +76,4 @@ python3 S1QueryConverter_Multiple.py
 If you encounter an issue with bad conversions, please let me know. Open an issue and reference the error your see (or better yet, in the code) so that we can account for it correctly. 
 
 # Disclaimer
-This tool was made with intent to help the Cyber community at large.  The author accepts no responsiblity for queries that do not function after using the tool to convert them.  Please double check your detections with validation.  
+This tool was made with intent to help the Cyber community at large.  The author accepts no responsibility for queries that do not function after using the tool to convert them.  Please double check your detections with validation.  

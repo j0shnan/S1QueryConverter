@@ -20,7 +20,7 @@ S1QueryConverter is a project written in Python 3 which takes SentinelOne DeepVi
 
 # Description
 
-S1QueryConverter is 2 Python scripts. The _Single version takes a file containing SentinelOne DeepVis v1 queries and translates them into DeepVis v2 query language using argparse for file intake and re for regular expressions. When ran, the script writes output to the terminal. The _Multi version uses pandas and re to convert entire libraries. 
+S1QueryConverter is 2 Python scripts. The _Single version takes a file containing SentinelOne DeepVis v1 query and translates it to DeepVis v2 query language using argparse for file intake and re for regular expressions. When ran, the script writes output to the terminal. The _Multi version uses pandas and re to convert entire detection libraries. 
 
 To run the scripts you'll need Python 3.  You can DL the raw files from this GitHub page, the zip, or clone the repo.  It should work with files anywhere on your system the user has permission to alter. Notably, the Multi converter will convert an entire detection library.  The script needs to be altered with the following hardcoded parameters to function:
 - input .xlsx file

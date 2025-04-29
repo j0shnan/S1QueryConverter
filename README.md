@@ -1,6 +1,6 @@
-| [![Sponsored By CyberMaxx](https://github.com/j0shnan/S1QueryConverter/blob/main/Images/cybermaxx_logo.png)](https://www.cybermaxx.com/) |
-|:__:|
-|**Sponsored by CyberMaxx|
+[![Sponsored By CyberMaxx](https://github.com/j0shnan/S1QueryConverter/blob/main/Images/cybermaxx_logo.png)](https://www.cybermaxx.com/)
+
+# Sponsored by CyberMaxx
 
 # S1 Query Converter
 

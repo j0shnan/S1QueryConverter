@@ -1,4 +1,4 @@
-[![Alt text for image](https://github.com/j0shnan/S1QueryConverter/Images/cybermaxx_logo.png)][Sponsored By CyberMaxx](https://www.cybermaxx.com/)
+[![Sponsored By CyberMaxx](https://raw.githubusercontent.com/j0shnan/S1QueryConverter/Images/cybermaxx_logo.png)](https://www.cybermaxx.com/)
 
 
 

@@ -2,6 +2,7 @@
 [![Sponsored By CyberMaxx](https://github.com/j0shnan/S1QueryConverter/blob/main/Images/cybermaxx_logo.png)](https://www.cybermaxx.com/)
 
 Sponsored By CyberMaxx
+
 ![Visitor Count](https://visitcount.itsvg.in/api?id=j0shnan.S1QueryConverter)
 
 # S1 Query Converter

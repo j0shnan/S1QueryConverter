@@ -1,4 +1,4 @@
-![Static Badge](https://img.shields.io/badge/Made%20with%20-%20Python)
+![Static Badge](https://img.shields.io/badge/Made_with-Python)
 ![Visitor Count](https://visitcount.itsvg.in/api?id=j0shnan.S1Query.Converter)
 
 [![Sponsored By CyberMaxx](https://github.com/j0shnan/S1QueryConverter/blob/main/Images/cybermaxx_logo.png)](https://www.cybermaxx.com/)

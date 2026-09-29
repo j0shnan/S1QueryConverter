@@ -128,3 +128,6 @@ The clause is left in the output as-is (with the field name already mapped to v2
 **Consolidation and optimization** are out of scope. The tool converts each clause individually and preserves the structure of the original query. Grouping multiple same-field clauses into a value list, or adding `endpoint.os` / `event.category` scoping filters, is a separate authoring step.
 
 ---
+
+### Of Note 
+This is project was created and is maintained with the help of LLM.  Please check to be sure the queries you're running expected. 

@@ -130,4 +130,4 @@ The clause is left in the output as-is (with the field name already mapped to v2
 ---
 
 ### Of Note 
-This is project was created and is maintained with the help of LLM.  Please check to be sure the queries you're running expected. 
+This is project was created and is maintained with the help of LLM.  Please check to be sure the queries you're using are running as running expected. 

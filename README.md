@@ -128,11 +128,3 @@ The clause is left in the output as-is (with the field name already mapped to v2
 **Consolidation and optimization** are out of scope. The tool converts each clause individually and preserves the structure of the original query. Grouping multiple same-field clauses into a value list, or adding `endpoint.os` / `event.category` scoping filters, is a separate authoring step.
 
 ---
-
-## Running the tests
-
-```bash
-python3 test_engine.py
-```
-
-Should print `35 passed, 0 failed`. Run this after any change to `s1ql_convert.py`.

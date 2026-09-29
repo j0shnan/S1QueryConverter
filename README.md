@@ -5,74 +5,134 @@ Sponsored By CyberMaxx
 
 ![Visitor Count](https://visitcount.itsvg.in/api?id=j0shnan.S1QueryConverter)
 
-# S1 Query Converter
+# S1QL Query Converter
 
+Converts SentinelOne S1QL v1 (Deep Visibility) queries into S1QL v2 (Event Search / PowerQuery) syntax. Works on a single query from a text file or in batch across an Excel workbook.
 
-S1QueryConverter is a project written in Python 3 which takes SentinelOne DeepVis v1 queries and translates them into DeepVis v2 query language.  
+## Requirements
 
+- Python 3.7+
+- `pandas` and `openpyxl` (batch mode only): `pip install pandas openpyxl`
 
-
-# Contents
-
-- [Overview](#overview)
-- [Description](#description)
-- [Install & Usage](#install--usage)
-- [Reporting Issues](#reporting-issues)
-- [Disclaimer](#disclaimer)
-
-# Description
-
-S1QueryConverter is 2 Python scripts. The _Single version takes a file containing SentinelOne DeepVis v1 query and translates it to DeepVis v2 query language using argparse for file intake and re for regular expressions. When ran, the script writes output to the terminal. The _Multi version uses pandas and re to convert entire detection libraries. 
-
-To run the scripts you'll need Python 3.  You can DL the raw files from this GitHub page, the zip, or clone the repo.  It should work with files anywhere on your system the user has permission to alter. Notably, the Multi converter will convert an entire detection library.  The script needs to be altered with the following hardcoded parameters to function:
-- input .xlsx file
-- sheet name from the file
-- column(s) to convert (that's right, we'll do multiple columns!!)
-- columns to output
-- output file name && path
-
-
-** I'm not a dev, I just like to eliminate odysseys from my work flow.  I would test a handful of your queries with the single converter script and then move over to the multiple converter script once you've altered for any unique issues your query sets may have. You'll see at the end of the "main" converter function there's a place to write quick & dirty replacements or just go hog wild and make it what you want.  If you see something, please do say something to me and I'll work on altering the scripts. 
-
-Lastly, there is one known issue which tends to create a chicken / egg scenario.  That's looking for double or single quotes inside of a query that is NOT part of a regex query. 
-E.g., " 'httpx://SomeSite.Site" or "\\Maybe\Some\Share BlahBlah=\"AnotherResource" 
-In both examples this creates an issue in the new QL.  The resolution here is to encapsulate both with Single Quotes:
-E.g., 'httpx://SomeSite.Site' or '\\Maybe\Some\Share BlahBlah=\"AnotherResource'
-Since v2 accepts single quotes this is not a major issue, but still needs to be solved manually.  Thankfully, these aren't scenarios we run into frequently when making queries.  Please be aware that the scripts will both hit these conditions and stop converting anything that comes after it to v2 ql (you'll have a partially converted query).  
-
-
-
-# Install & Usage
-
-## Install
-
-To install you can clone the repo, DL the raw .py files (not dependent on one another), or paste them where you would like to perform operations on your file system.
-E.g.,
+All three files must be in the same directory:
 
 ```
-# Clone the repository
-git clone https://github.com/j0shnan/S1QueryConverter
-cd S1QueryConverter
-
+s1ql_convert.py              # conversion engine (shared by both scripts)
+S1QueryConverter_Single.py   # single-query CLI
+S1QueryConverter_Multiple.py # batch xlsx CLI
 ```
 
-## Usage
-```
-# Single Converter Script:
+---
 
-python3 S1QueryConverter_Single.py  <FileName.txt>
+## Single query
 
+Put your v1 query in a plain text file, then run:
 
-# Multi query converter
-# *** OF NOTE ***
-# There are multiple parameters this script needs to function. The .xlsx file, sheet name, column(s) to convert, output file name and path. So, it's left as a hard coded. It can be easily modified to suit your needs. 
-
-python3 S1QueryConverter_Multiple.py
-
+```bash
+python3 S1QueryConverter_Single.py query.txt
 ```
 
-# Reporting Issues
-If you encounter an issue with bad conversions, please let me know. Open an issue and reference the error your see (or better yet, in the code) so that we can account for it correctly. 
+To also save the output to a file:
 
-# Disclaimer
-This tool was made with intent to help the Cyber community at large.  The author accepts no responsibility for queries that do not function after using the tool to convert them.  Please double check your detections with validation.  
+```bash
+python3 S1QueryConverter_Single.py query.txt -o converted.txt
+```
+
+The original query and the converted result are both printed to stdout. If anything needs manual attention, warnings are printed below the result.
+
+**Exit codes:**
+
+| Code | Meaning |
+|------|---------|
+| `0` | Clean conversion, no action needed |
+| `1` | Converted, but one or more clauses need manual review (see printed warnings) |
+| `2` | Could not read the input file |
+
+---
+
+## Batch mode (Excel)
+
+Reads one or more columns of v1 queries from an `.xlsx` file and adds converted columns alongside them.
+
+**Minimal usage** — convert the `Query` column in the first sheet:
+
+```bash
+python3 S1QueryConverter_Multiple.py -i detections.xlsx -c Query
+```
+
+**Full options:**
+
+```bash
+python3 S1QueryConverter_Multiple.py \
+  -i detections.xlsx \       # input file (required)
+  -s "Rules" \               # sheet name or 0-based index (default: first sheet)
+  -c Query \                 # column to convert (repeat -c for multiple columns)
+  -c Notes \
+  -o detections_v2.xlsx \    # output file (default: <input>_converted.xlsx)
+  --suffix _v2               # suffix for new columns (default: _v2)
+```
+
+For each `-c` column, two new columns are added to the output:
+
+| Column | Contents |
+|--------|----------|
+| `<column>_v2` | The converted query. Always populated, even when flagged. |
+| `<column>_v2_warnings` | Empty if clean. Otherwise a `;`-separated list of issues to review. |
+
+Rows with warnings do not stop the run — they're flagged in place and the rest of the file continues processing.
+
+> **Note:** Only the specified sheet is written to the output file. Other sheets in the workbook are not copied across.
+
+---
+
+## What gets converted automatically
+
+| v1 syntax | v2 output |
+|-----------|-----------|
+| `Field Contains Anycase "x"` | `field contains "x"` |
+| `Field ContainsCIS "x"` | `field contains "x"` |
+| `Field Contains "x"` | `field contains "x"` |
+| `Field Does Not ContainCIS "x"` | `NOT (field contains "x")` |
+| `Field Does Not Contain "x"` | `NOT (field contains:matchcase "x")` |
+| `Field In Contains Anycase (...)` | `field contains (...)` |
+| `Field In Contains (...)` | `field contains:matchcase (...)` |
+| `Field In Anycase (...)` | `field in:anycase (...)` |
+| `Field In (...)` | `field in (...)` |
+| `Field Not In (...)` | `NOT (field in (...))` |
+| `Field StartsWith "x"` | `field matches "^x"` |
+| `Field EndsWith "x"` | `field matches "x$"` |
+| `Field RegExp "..."` | `field matches "..."` |
+| `Field Is Empty` | `!(field = *)` |
+| `Field Is Not Empty` | `field = *` |
+| `Field Is True` | `field = true` |
+| `Field Is False` | `field = false` |
+| `Field Exists` | `field = *` |
+
+All ~350 field names are mapped from v1 CamelCase to v2 dot notation (e.g. `SrcProcImagePath` → `src.process.image.path`). String literals are never rewritten — operator keywords or field names that happen to appear inside a quoted value are left exactly as written.
+
+---
+
+## Known limitations
+
+**`between`** is detected and flagged but not auto-converted, because the exact v1 syntax wasn't available to verify against. The warning tells you what to write:
+
+```
+"TgtFileSize between ..." was left unconverted -- needs manual conversion to
+"tgt.file.size >= a AND tgt.file.size <= b"
+```
+
+The clause is left in the output as-is (with the field name already mapped to v2), so it's easy to find and fix.
+
+**Literals containing both `"` and `'`** can't be automatically re-quoted. The converter flags the specific literal and sets exit code 1. Wrap it manually in whichever quote character doesn't appear in the value.
+
+**Consolidation and optimization** are out of scope. The tool converts each clause individually and preserves the structure of the original query. Grouping multiple same-field clauses into a value list, or adding `endpoint.os` / `event.category` scoping filters, is a separate authoring step.
+
+---
+
+## Running the tests
+
+```bash
+python3 test_engine.py
+```
+
+Should print `35 passed, 0 failed`. Run this after any change to `s1ql_convert.py`.
